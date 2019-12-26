@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "181226339583",
+    "firebase_url": "https://secretcypher-1dd20.firebaseio.com",
+    "project_id": "secretcypher-1dd20",
+    "storage_bucket": "secretcypher-1dd20.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:181226339583:android:67dbde71d90f074878e0ca",
+        "android_client_info": {
+          "package_name": "com.carbonbasednerd.secret_cypher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "181226339583-v72qgo4mq5kh6o7n1v9d23vfdtu9l2t2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0tUE7z6HAR7dd4UihEl9R28hYrRbxEGA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "181226339583-v72qgo4mq5kh6o7n1v9d23vfdtu9l2t2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
