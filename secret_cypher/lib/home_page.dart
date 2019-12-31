@@ -23,7 +23,6 @@ class _HomePageState extends State<HomePage> {
   int dotDashes = 1;
   HashMap codex;
 
-
   @override
   void initState() {
     super.initState();
@@ -45,11 +44,22 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: new Container(
+            color: Colors.cyanAccent,
             padding: EdgeInsets.all(16.0),
-            child: new Center(
-                child: new Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [showMessage(), showMorseResults(), showControls()]))));
+            child: new Container(
+                color: Colors.green,
+                child: new Center(
+                    child: new Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                      showMessage(),
+                      showMorseResults(),
+                      new Container(
+                        ,
+                        color: Colors.brown,
+                        child: showControls(),
+                      )
+                    ])))));
   }
 
   Widget showMessage() {
@@ -75,14 +85,13 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget showControls() {
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          telegraphKey(),
-          enterLetterKey(),
-          spaceKey()
-        ],
-    );
+    return new Container(
+        color: Colors.pink,
+        child: new Row(
+//      crossAxisAlignment: CrossAxisAlignment,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[telegraphKey(), enterLetterKey(), spaceKey()],
+        ));
   }
 
   Widget telegraphKey() {
@@ -106,20 +115,18 @@ class _HomePageState extends State<HomePage> {
         color: Colors.blue,
         child: new Text("ENTER",
             style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-        onPressed: enterCharacter
-    );
+        onPressed: enterCharacter);
   }
 
   Widget spaceKey() {
     return new RaisedButton(
-      elevation: 5.0,
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(30.0)),
-      color: Colors.blue,
-      child: new Text("SPACE",
-          style: new TextStyle(fontSize: 20.0, color: Colors.white)),
-      onPressed: addSpace
-    );
+        elevation: 5.0,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(30.0)),
+        color: Colors.blue,
+        child: new Text("SPACE",
+            style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+        onPressed: addSpace);
   }
 
   void enterCharacter() {
@@ -137,7 +144,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         if (isDot) {
           morseCharacter += "*";
-          dotDashes = addOne(dotDashes<<=1);
+          dotDashes = addOne(dotDashes <<= 1);
         } else {
           morseCharacter += "-";
           dotDashes <<= 1;
@@ -149,14 +156,12 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  static int addOne(int x)
-  {
+  static int addOne(int x) {
     int m = 1;
 
     // Flip all the set bits
     // until we find a 0
-    while( (x & m) >= 1)
-    {
+    while ((x & m) >= 1) {
       x = x ^ m;
       m <<= 1;
     }
