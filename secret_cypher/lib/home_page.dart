@@ -50,12 +50,11 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.green,
                 child: new Center(
                     child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                       showMessage(),
                       showMorseResults(),
                       new Container(
-                        ,
                         color: Colors.brown,
                         child: showControls(),
                       )
