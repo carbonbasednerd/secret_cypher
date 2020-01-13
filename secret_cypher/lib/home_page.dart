@@ -44,6 +44,23 @@ class _HomePageState extends State<HomePage> {
                 onPressed: signOut)
           ],
         ),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: 0,
+          items: [
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.home),
+                title: new Text("Home")
+            ),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.message),
+                title: new Text("Messages")
+            ),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.contacts),
+                title: new Text("Contacts")
+            )
+          ],
+        ),
         body: new Container(
             padding: EdgeInsets.all(16.0),
             child: new Container(
@@ -52,9 +69,8 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                   showMessage(),
-                  showMorseResults(),
                   new Container(
-                    child: showControls(),
+                    child: controlColumn(),
                   )
                 ])))));
   }
@@ -82,10 +98,35 @@ class _HomePageState extends State<HomePage> {
     return new Text(character);
   }
 
+
+  Widget inputLabel() {
+    return new Text("INPUT:");
+  }
+
+  Widget controlColumn() {
+    return new Column(
+      children: [
+        showMorseResultsContainer(),
+        showControls()
+      ]
+    );
+  }
+
+  Widget showMorseResultsContainer() {
+    return new Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.blueAccent)
+        ),
+        padding: EdgeInsets.all(2.0),
+        child: showMorseResults()
+    );
+  }
+
   Widget showMorseResults() {
     return new Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
+        inputLabel(),
         showCharacter(),
         showMorseCharacter(),
       ],
@@ -97,19 +138,31 @@ class _HomePageState extends State<HomePage> {
         child: new Row(
 //      crossAxisAlignment: CrossAxisAlignment,
       mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[telegraphKey(), enterLetterKey(), spaceKey()],
+      children: <Widget>[dotKey(), dashKey(), enterLetterKey(), spaceKey()],
     ));
   }
 
-  Widget telegraphKey() {
+  Widget dotKey() {
     return new RaisedButton(
       elevation: 5.0,
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0)),
-      child: new Text("DOT/DASH",
-          style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+      child: new Text("DOT",
+          style: new TextStyle(fontSize: 15.0, color: Colors.white)),
       onPressed: () => updateMessage(true),
-      onLongPress: () => updateMessage(false),
+      color: Colors.red,
+    );
+  }
+
+  Widget dashKey() {
+    return new RaisedButton(
+      elevation: 5.0,
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(30.0)),
+      child: new Text("DASH",
+          style: new TextStyle(fontSize: 15.0, color: Colors.white)),
+      onPressed: () => updateMessage(false),
+      color: Colors.red
     );
   }
 
@@ -119,7 +172,7 @@ class _HomePageState extends State<HomePage> {
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0)),
         child: new Text("ENTER",
-            style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+            style: new TextStyle(fontSize: 15.0, color: Colors.white)),
         onPressed: enterCharacter);
   }
 
@@ -129,7 +182,7 @@ class _HomePageState extends State<HomePage> {
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0)),
         child: new Text("SPACE",
-            style: new TextStyle(fontSize: 20.0, color: Colors.white)),
+            style: new TextStyle(fontSize: 15.0, color: Colors.white)),
         onPressed: addSpace);
   }
 

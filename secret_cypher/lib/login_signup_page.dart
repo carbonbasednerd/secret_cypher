@@ -31,7 +31,8 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
             showForm(),
             showCircularProgress(),
           ],
-        ));
+        )
+    );
   }
 
   Widget showForm() {
