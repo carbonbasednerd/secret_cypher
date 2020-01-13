@@ -1,5 +1,6 @@
 import 'dart:collection';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secret_cypher/authentication.dart';
 
@@ -44,25 +45,33 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         body: new Container(
-            color: Colors.cyanAccent,
             padding: EdgeInsets.all(16.0),
             child: new Container(
-                color: Colors.green,
                 child: new Center(
                     child: new Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                      showMessage(),
-                      showMorseResults(),
-                      new Container(
-                        color: Colors.brown,
-                        child: showControls(),
-                      )
-                    ])))));
+                  showMessage(),
+                  showMorseResults(),
+                  new Container(
+                    child: showControls(),
+                  )
+                ])))));
   }
 
   Widget showMessage() {
-    return new Text(message);
+    return new Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.blueAccent)
+        ),
+        padding: EdgeInsets.all(2.0),
+        width: 800.0,
+        child: new Text(message,
+              textWidthBasis: TextWidthBasis.parent,
+              softWrap: true,
+              style: new TextStyle(
+                  color: Colors.black, backgroundColor: Colors.white))
+        );
   }
 
   Widget showMorseCharacter() {
@@ -85,12 +94,11 @@ class _HomePageState extends State<HomePage> {
 
   Widget showControls() {
     return new Container(
-        color: Colors.pink,
         child: new Row(
 //      crossAxisAlignment: CrossAxisAlignment,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[telegraphKey(), enterLetterKey(), spaceKey()],
-        ));
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[telegraphKey(), enterLetterKey(), spaceKey()],
+    ));
   }
 
   Widget telegraphKey() {
@@ -98,7 +106,6 @@ class _HomePageState extends State<HomePage> {
       elevation: 5.0,
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0)),
-      color: Colors.red,
       child: new Text("DOT/DASH",
           style: new TextStyle(fontSize: 20.0, color: Colors.white)),
       onPressed: () => updateMessage(true),
@@ -111,7 +118,6 @@ class _HomePageState extends State<HomePage> {
         elevation: 5.0,
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0)),
-        color: Colors.blue,
         child: new Text("ENTER",
             style: new TextStyle(fontSize: 20.0, color: Colors.white)),
         onPressed: enterCharacter);
@@ -122,7 +128,6 @@ class _HomePageState extends State<HomePage> {
         elevation: 5.0,
         shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(30.0)),
-        color: Colors.blue,
         child: new Text("SPACE",
             style: new TextStyle(fontSize: 20.0, color: Colors.white)),
         onPressed: addSpace);
