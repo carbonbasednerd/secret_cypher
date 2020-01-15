@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:secret_cypher/authentication.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginSignupPage extends StatefulWidget {
   LoginSignupPage({this.auth, this.loginCallback});
@@ -13,6 +14,7 @@ class LoginSignupPage extends StatefulWidget {
 
 class _LoginSignupPageState extends State<LoginSignupPage> {
   final _formKey = new GlobalKey<FormState>();
+  final databaseReference = Firestore.instance;
   String _email;
   String _password;
   String _errorMessage;
@@ -204,6 +206,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           userId = await widget.auth.signUp(_email, _password);
           //widget.auth.sendEmailVerification();
           //_showVerifyEmailSentDialog();
+          createRecord(userId);
           print('Signed up user: $userId');
         }
         setState(() {
@@ -222,5 +225,22 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
         });
       }
     }
+  }
+
+  void createRecord(String id) async {
+    await databaseReference.collection("users")
+        .document()
+        .setData({
+      'name': 'Test',
+      'private': true,
+      'user_id': id
+    });
+
+//    DocumentReference ref = await databaseReference.collection("books")
+//        .add({
+//      'title': 'Flutter in Action',
+//      'description': 'Complete Programming Guide to learn Flutter'
+//    });
+//    print(ref.documentID);
   }
 }
