@@ -213,7 +213,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
           _isLoading = false;
         });
 
-        if (userId.length > 0 && userId != null && _isLoginForm) {
+        if (userId.length > 0 && userId != null) {
           widget.loginCallback();
         }
       } catch (e) {
@@ -229,18 +229,10 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
 
   void createRecord(String id) async {
     await databaseReference.collection("users")
-        .document()
+        .document(id)
         .setData({
-      'name': 'Test',
-      'private': true,
-      'user_id': id
+      'name': '',
+      'private': true
     });
-
-//    DocumentReference ref = await databaseReference.collection("books")
-//        .add({
-//      'title': 'Flutter in Action',
-//      'description': 'Complete Programming Guide to learn Flutter'
-//    });
-//    print(ref.documentID);
   }
 }

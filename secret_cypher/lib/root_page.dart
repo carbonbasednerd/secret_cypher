@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:secret_cypher/authentication.dart';
 import 'package:secret_cypher/login_signup_page.dart';
 import 'package:secret_cypher/home_page.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:secret_cypher/user_data.dart';
 
 enum AuthStatus {
   NOT_DETERMINED,
@@ -19,7 +21,9 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
+  final databaseReference = Firestore.instance;
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
+  bool hasCodename = false;
   String _userId = "";
 
   @override
@@ -50,11 +54,20 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (_userId.length > 0 && _userId != null) {
-          return new HomePage(
-            userId: _userId,
-            auth: widget.auth,
-            logoutCallback: logoutCallback,
-          );
+          if (hasCodename) {
+            return new HomePage(
+              userId: _userId,
+              auth: widget.auth,
+              logoutCallback: logoutCallback,
+            );
+          } else {
+            return new UserData(
+              auth: widget.auth,
+              userId: _userId,
+              updateUserCallback: updateUserCallBack,
+            );
+          }
+
         } else
           return buildWaitingScreen();
         break;
@@ -81,12 +94,35 @@ class _RootPageState extends State<RootPage> {
     setState(() {
       authStatus = AuthStatus.LOGGED_IN;
     });
+    getUserData(_userId);
   }
 
   void logoutCallback() {
     setState(() {
       authStatus = AuthStatus.NOT_LOGGED_IN;
       _userId = "";
+    });
+  }
+
+  void updateUserCallBack() {
+    setState(() {
+      hasCodename = true;
+      authStatus = AuthStatus.LOGGED_IN;
+    });
+  }
+
+  void getUserData(String id) {
+    bool nameExists = false;
+    databaseReference.collection("users")
+        .document(id)
+        .get().then((val){
+          if (val['name'] != ''){
+            nameExists = true;
+          }
+        }
+    );
+    setState(() {
+      hasCodename = nameExists;
     });
   }
 }
