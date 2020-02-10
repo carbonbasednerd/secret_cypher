@@ -59,7 +59,7 @@ class _RootPageState extends State<RootPage> {
         if (AppState().userId != null && AppState().userId.length > 0) {
           if (hasCodename) {
             return new HomePage(
-              userId: _userId,
+              userId: AppState().userId,
               codeName: codeName,
               auth: widget.auth,
               logoutCallback: logoutCallback,
@@ -67,7 +67,7 @@ class _RootPageState extends State<RootPage> {
           } else {
             return new UserData(
               auth: widget.auth,
-              userId: _userId,
+              userId: AppState().userId,
               updateUserCallback: updateUserCallBack,
             );
           }
@@ -109,10 +109,10 @@ class _RootPageState extends State<RootPage> {
     });
   }
 
-  void updateUserCallBack() {
+  void updateUserCallBack() async {
     DocumentReference docs = databaseReference.collection("users").document(AppState().userId);
     String name = "BOB";
-    docs.get().then((val) {
+    await docs.get().then((val) {
       if (val['name'] != '') {
         name = val['name'];
       }

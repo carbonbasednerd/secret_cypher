@@ -36,24 +36,24 @@ class _UserDataState extends State<UserData> {
             padding: EdgeInsets.all(16.0),
             child: new Center(
                 child: new Form(
-                  key: _formKey,
+                    key: _formKey,
                     child: new Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                  new Text(
-                    "Welcome New Agent! Gotta have a code name here. What's yours going to be?",
-                    style: new TextStyle(fontSize: 25),
-                  ),
-                  new TextFormField(
-                    maxLines: 1,
-                    style: new TextStyle(fontSize: 18),
-                    textAlign: TextAlign.center,
-                    validator: (value) =>
-                        value.isEmpty ? 'Agent Name can\'t be empty' : null,
-                    onSaved: (value) => _codeName = value.trim(),
-                  ),
-                  showPrimaryButton()
-                ])))));
+                          new Text(
+                            "Welcome New Agent! Gotta have a code name here. What's yours going to be?",
+                            style: new TextStyle(fontSize: 25),
+                          ),
+                          new TextFormField(
+                            maxLines: 1,
+                            style: new TextStyle(fontSize: 18),
+                            textAlign: TextAlign.center,
+                            validator: (value) =>
+                            value.isEmpty ? 'Agent Name can\'t be empty' : null,
+                            onSaved: (value) => _codeName = value.trim(),
+                          ),
+                          showPrimaryButton()
+                        ])))));
   }
 
   Widget showPrimaryButton() {

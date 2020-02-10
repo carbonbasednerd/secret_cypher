@@ -228,6 +228,7 @@ class _LoginSignupPageState extends State<LoginSignupPage> {
   }
 
   void createRecord(String id) async {
+    //todo does this cause a hang if it fails?
     await databaseReference.collection("users")
         .document(id)
         .setData({
