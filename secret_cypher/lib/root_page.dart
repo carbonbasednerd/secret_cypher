@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:secret_cypher/app_state.dart';
 import 'package:secret_cypher/authentication.dart';
 import 'package:secret_cypher/login_signup_page.dart';
 import 'package:secret_cypher/home_page.dart';
@@ -24,6 +26,7 @@ class _RootPageState extends State<RootPage> {
   final databaseReference = Firestore.instance;
   AuthStatus authStatus = AuthStatus.NOT_DETERMINED;
   bool hasCodename = false;
+  String codeName;
   String _userId = "";
 
   @override
@@ -53,10 +56,11 @@ class _RootPageState extends State<RootPage> {
         );
         break;
       case AuthStatus.LOGGED_IN:
-        if (_userId.length > 0 && _userId != null) {
+        if (AppState().userId != null && AppState().userId.length > 0) {
           if (hasCodename) {
             return new HomePage(
               userId: _userId,
+              codeName: codeName,
               auth: widget.auth,
               logoutCallback: logoutCallback,
             );
@@ -67,7 +71,6 @@ class _RootPageState extends State<RootPage> {
               updateUserCallback: updateUserCallBack,
             );
           }
-
         } else
           return buildWaitingScreen();
         break;
@@ -85,16 +88,18 @@ class _RootPageState extends State<RootPage> {
     );
   }
 
-  void loginCallback() {
-    widget.auth.getCurrentUser().then((user) {
-      setState(() {
-        _userId = user.uid.toString();
-      });
-    });
+  void loginCallback() async {
+    FirebaseUser user = await FirebaseAuth.instance.currentUser();
+//    widget.auth.getCurrentUser().then((user) {
+//      setState(() {
+//
+//      });
+//    });
+    AppState().userId = user.uid;
     setState(() {
       authStatus = AuthStatus.LOGGED_IN;
     });
-    getUserData(_userId);
+    getUserData();
   }
 
   void logoutCallback() {
@@ -105,24 +110,35 @@ class _RootPageState extends State<RootPage> {
   }
 
   void updateUserCallBack() {
+    DocumentReference docs = databaseReference.collection("users").document(AppState().userId);
+    String name = "BOB";
+    docs.get().then((val) {
+      if (val['name'] != '') {
+        name = val['name'];
+      }
+    });
     setState(() {
+      codeName = name;
       hasCodename = true;
       authStatus = AuthStatus.LOGGED_IN;
     });
   }
 
-  void getUserData(String id) {
+  void getUserData() async {
     bool nameExists = false;
-    databaseReference.collection("users")
-        .document(id)
-        .get().then((val){
-          if (val['name'] != ''){
-            nameExists = true;
-          }
-        }
-    );
+    String name;
+    DocumentReference docs =
+        databaseReference.collection("users").document(AppState().userId);
+
+    await docs.get().then((val) {
+      if (val['name'] != '') {
+        nameExists = true;
+        name = val['name'];
+      }
+    });
     setState(() {
       hasCodename = nameExists;
+      codeName = name;
     });
   }
 }
