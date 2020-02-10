@@ -35,7 +35,9 @@ class _RootPageState extends State<RootPage> {
     widget.auth.getCurrentUser().then((user) {
       setState(() {
         if (user != null) {
+          //todo inefficient and something to be fixed
           _userId = user?.uid;
+          AppState().userId = user?.uid;
         }
         authStatus =
             user?.uid == null ? AuthStatus.NOT_LOGGED_IN : AuthStatus.LOGGED_IN;
@@ -57,6 +59,7 @@ class _RootPageState extends State<RootPage> {
         break;
       case AuthStatus.LOGGED_IN:
         if (AppState().userId != null && AppState().userId.length > 0) {
+          getUserData();
           if (hasCodename) {
             return new HomePage(
               userId: AppState().userId,
