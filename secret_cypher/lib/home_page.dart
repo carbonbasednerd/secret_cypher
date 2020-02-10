@@ -3,6 +3,8 @@ import 'dart:collection';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secret_cypher/authentication.dart';
+import 'package:secret_cypher/caesar_widget.dart';
+import 'package:secret_cypher/welcome_widget.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key, this.auth, this.userId, this.codeName, this.logoutCallback})
@@ -20,11 +22,15 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String codeName;
+  int _currentIndex = 0;
+  final List<Widget> _children = [];
 
   @override
   void initState() {
     super.initState();
     codeName = widget.codeName;
+    _children.add(WelcomeWidget(codeName));
+    _children.add(CaesarWidget());
   }
 
   @override
@@ -40,7 +46,8 @@ class _HomePageState extends State<HomePage> {
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(
-          currentIndex: 0,
+          onTap: onNavTabTapped,
+          currentIndex: _currentIndex,
           items: [
             BottomNavigationBarItem(
                 icon: new Icon(Icons.home),
@@ -48,25 +55,25 @@ class _HomePageState extends State<HomePage> {
             ),
             BottomNavigationBarItem(
                 icon: new Icon(Icons.message),
-                title: new Text("Messages")
+                title: new Text("Caesar")
             ),
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.contacts),
-                title: new Text("Contacts")
-            )
+//            BottomNavigationBarItem(
+//                icon: new Icon(Icons.message),
+//                title: new Text("M")
+//            ),
+//            BottomNavigationBarItem(
+//                icon: new Icon(Icons.contacts),
+//                title: new Text("Contacts")
+//            )
           ],
         ),
-        body: new Container(
-            padding: EdgeInsets.all(16.0),
-            child: new Container(
-                child: new Center(
-                    child: new Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          new Text("Welcome Agent, $codeName",
-                          style: new TextStyle(fontSize: 30),),
-                        ]
-                    )))));
+        body: _children[_currentIndex]);
+  }
+
+  onNavTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
   }
 
   signOut() async {
