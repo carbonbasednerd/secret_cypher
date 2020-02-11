@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:secret_cypher/authentication.dart';
 import 'package:secret_cypher/caesar_widget.dart';
+import 'package:secret_cypher/camera_test.dart';
 import 'package:secret_cypher/welcome_widget.dart';
 
 class HomePage extends StatefulWidget {
@@ -31,6 +32,7 @@ class _HomePageState extends State<HomePage> {
     codeName = widget.codeName;
     _children.add(WelcomeWidget(codeName));
     _children.add(CaesarWidget());
+    _children.add(CameraTest());
   }
 
   @override
@@ -57,10 +59,10 @@ class _HomePageState extends State<HomePage> {
                 icon: new Icon(Icons.message),
                 title: new Text("Caesar")
             ),
-//            BottomNavigationBarItem(
-//                icon: new Icon(Icons.message),
-//                title: new Text("M")
-//            ),
+            BottomNavigationBarItem(
+                icon: new Icon(Icons.camera),
+                title: new Text("Cam")
+            ),
 //            BottomNavigationBarItem(
 //                icon: new Icon(Icons.contacts),
 //                title: new Text("Contacts")
