@@ -5,6 +5,7 @@ class AppState {
 
   String userId;
   CameraDescription camDesc;
+  String visionText;
 
   factory AppState() {
     return _appState;

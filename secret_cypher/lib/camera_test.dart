@@ -99,6 +99,9 @@ class CameraTestState extends State<CameraTest> {
               final Rect boundingBox = block.boundingBox;
               final List<Offset> cornerPoints = block.cornerPoints;
               final String text = block.text;
+              if (text.length > 5) {
+                AppState().visionText = text;
+              }
               final List<RecognizedLanguage> languages = block.recognizedLanguages;
 
               for (TextLine line in block.lines) {

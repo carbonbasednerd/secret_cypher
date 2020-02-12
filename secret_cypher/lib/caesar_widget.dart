@@ -2,6 +2,8 @@ import 'package:firebase_ml_vision/firebase_ml_vision.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 
+import 'app_state.dart';
+
 class CaesarWidget extends StatefulWidget {
   CaesarWidget();
 
@@ -14,10 +16,10 @@ class _CaesarWidgetState extends State<CaesarWidget> {
   double sliderValue = 0;
   String decodedMessage = "";
   String originalMessage = "";
+  String visionText = AppState().visionText;
 
 //  final File imageFile = getImageFile();
 //  final FirebaseVisionImage visionImage = FirebaseVisionImage.fromFile(imageFile);
-
 
   @override
   Widget build(BuildContext context) {
@@ -36,6 +38,7 @@ class _CaesarWidgetState extends State<CaesarWidget> {
               new Form(
                   key: _formKey,
                   child: new TextFormField(
+                      initialValue: visionText,
                       minLines: null,
                       maxLines: null,
                       onSaved: (value) => originalMessage = value.trim(),
