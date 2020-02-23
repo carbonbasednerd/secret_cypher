@@ -32,7 +32,7 @@ class _CaesarWidgetState extends State<CaesarWidget> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
               new Text(
-                "Let's code some shit!",
+                "Caeser Cypher",
                 style: new TextStyle(fontSize: 30),
               ),
               new Form(
@@ -46,16 +46,27 @@ class _CaesarWidgetState extends State<CaesarWidget> {
                       decoration: new InputDecoration(
                         hintText: 'Enter text to decode',
                       ))),
+              new Container(
+                  padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 15.0),
+                  child: new Text("Decoded Message",
+                      style: new TextStyle(fontSize: 30))),
+              new Container(
+                  decoration: BoxDecoration(
+                      border: Border.all(color: Colors.blueAccent)
+                  ),
+                  padding: EdgeInsets.fromLTRB(5.0, 0.0, 5.0, 0.0),
+                  child: new Text(decodedMessage,
+                      style: new TextStyle(fontSize: 18))),
+              new Container(
+                  padding: EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+                  child: new Text("Shift Value: $roundedSliderValue")),
               new Slider(
                 value: sliderValue,
                 min: 0.0,
                 max: 25.0,
                 divisions: 26,
                 onChanged: onSliderChanged,
-              ),
-              new Text("Shift Value: $roundedSliderValue"),
-              new Text("Decoded Message"),
-              new Text(decodedMessage),
+              )
             ]))));
   }
 
