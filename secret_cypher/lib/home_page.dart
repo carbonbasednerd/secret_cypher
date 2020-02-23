@@ -59,10 +59,10 @@ class _HomePageState extends State<HomePage> {
                 icon: new Icon(Icons.message),
                 title: new Text("Caesar")
             ),
-            BottomNavigationBarItem(
-                icon: new Icon(Icons.camera),
-                title: new Text("Cam")
-            ),
+//            BottomNavigationBarItem(
+//                icon: new Icon(Icons.camera),
+//                title: new Text("Cam")
+//            ),
 //            BottomNavigationBarItem(
 //                icon: new Icon(Icons.contacts),
 //                title: new Text("Contacts")
